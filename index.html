@@ -3,272 +3,580 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A multithreaded HTTP & REST API server written in C++ from scratch.">
-    <title>C++ HTTP & REST API Server | High Performance Engine</title>
+    <meta name="description" content="Production-Grade C++ Multithreaded HTTP Server and REST API Platform with live telemetry, API studio, and in-memory CRUD engine.">
+    <title>C++ Server Hub | High Performance HTTP &amp; REST Platform</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 </head>
 <body>
 
-<header>
-    <nav>
-        <div class="logo">
-            <span class="logo-icon">⚡</span> C++ HTTP &amp; REST Server
-        </div>
-
-        <div class="nav-links">
-            <a href="#dashboard">Live Metrics</a>
-            <a href="#api-explorer">REST APIs</a>
-            <a href="#task-app">CRUD App</a>
-            <a href="#features">Features</a>
-        </div>
-
-        <div class="status-container">
-            <div class="status" id="server-status-pill" title="Click to ping server">
-                <span class="dot"></span>
-                <span id="status-text">Server Online</span>
+<div class="app-layout">
+    <!-- Top Navigation Header -->
+    <header class="top-nav">
+        <div class="brand-section">
+            <div class="brand-logo">
+                <span class="logo-bolt">⚡</span>
+                <div class="brand-text">
+                    <span class="brand-title">C++ Engine</span>
+                    <span class="brand-subtitle">HTTP/1.1 &bull; POSIX Sockets</span>
+                </div>
             </div>
+            <div class="version-tag">v1.2.0-prod</div>
+        </div>
+
+        <!-- Top Right Control Stats -->
+        <div class="header-actions">
+            <div class="server-pill" id="server-status-pill" title="Click to test socket connection">
+                <span class="pulse-dot"></span>
+                <span id="header-status-text">Server Online (0ms)</span>
+            </div>
+
+            <div class="stat-badge">
+                <span class="badge-icon">⏱️</span>
+                <span id="header-uptime">--</span>
+            </div>
+
+            <div class="stat-badge">
+                <span class="badge-icon">🔌</span>
+                <span id="header-port">PORT: 8080</span>
+            </div>
+
+            <a href="https://github.com" target="_blank" rel="noopener" class="icon-btn" title="View Source on GitHub">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs Bar -->
+    <nav class="tabs-nav-bar">
+        <div class="tabs-container">
+            <button class="nav-tab active" data-tab="tab-telemetry">
+                <span class="tab-icon">📊</span>
+                <span class="tab-label">Telemetry &amp; Metrics</span>
+            </button>
+
+            <button class="nav-tab" data-tab="tab-api-studio">
+                <span class="tab-icon">⚡</span>
+                <span class="tab-label">REST API Studio</span>
+            </button>
+
+            <button class="nav-tab" data-tab="tab-crud">
+                <span class="tab-icon">📝</span>
+                <span class="tab-label">In-Memory Database</span>
+                <span class="tab-pill" id="task-badge-count">3</span>
+            </button>
+
+            <button class="nav-tab" data-tab="tab-benchmarks">
+                <span class="tab-icon">🧪</span>
+                <span class="tab-label">Load &amp; Stress Tester</span>
+            </button>
+
+            <button class="nav-tab" data-tab="tab-architecture">
+                <span class="tab-icon">🏗️</span>
+                <span class="tab-label">System Architecture</span>
+            </button>
         </div>
     </nav>
-</header>
 
-<main>
-    <section class="hero">
-        <div class="badge">
-            🚀 High-Performance C++17 Networking Engine
-        </div>
+    <!-- Main Content Tab Panels -->
+    <main class="main-viewport">
 
-        <h1>
-            Multithreaded <span>HTTP &amp; REST API</span> Server
-        </h1>
-
-        <p>
-            Engineered from the ground up in standard C++ using native TCP sockets.
-            Features concurrent worker threads, full RESTful JSON APIs, in-memory CRUD data store,
-            directory traversal security, and cloud-ready containerization.
-        </p>
-
-        <div class="buttons">
-            <a href="#dashboard" class="btn primary">View Live Metrics</a>
-            <a href="#api-explorer" class="btn secondary">Explore REST APIs</a>
-            <a href="#task-app" class="btn secondary">Test CRUD App</a>
-        </div>
-    </section>
-
-    <!-- Real-Time Metrics Dashboard -->
-    <section id="dashboard" class="section">
-        <h2>Live Server Telemetry</h2>
-        <p>Real-time telemetry reported directly by the C++ backend via <code>/api/status</code>.</p>
-
-        <div class="metrics-grid">
-            <div class="metric-card">
-                <div class="metric-label">Server Status</div>
-                <div class="metric-value status-good" id="metric-health">Healthy</div>
-                <div class="metric-sub" id="metric-version">v1.2.0 • C++17</div>
-            </div>
-
-            <div class="metric-card">
-                <div class="metric-label">Server Uptime</div>
-                <div class="metric-value" id="metric-uptime">0s</div>
-                <div class="metric-sub">Live Process Time</div>
-            </div>
-
-            <div class="metric-card">
-                <div class="metric-label">Requests Served</div>
-                <div class="metric-value" id="metric-requests">0</div>
-                <div class="metric-sub">Lifetime HTTP requests</div>
-            </div>
-
-            <div class="metric-card">
-                <div class="metric-label">Active Connections</div>
-                <div class="metric-value" id="metric-connections">0</div>
-                <div class="metric-sub">Concurrent client threads</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Interactive REST API Explorer -->
-    <section id="api-explorer" class="section">
-        <h2>Interactive REST API Explorer</h2>
-        <p>
-            Test real HTTP methods (GET, POST, PUT, DELETE) against the C++ backend.
-            Click any endpoint below to inspect real-time JSON payloads, headers, and roundtrip latency.
-        </p>
-
-        <div class="tester-container">
-            <div class="test-controls">
-                <div class="control-group-title">Telemetry &amp; Diagnostics</div>
-                <button class="test-btn" data-method="GET" data-path="/api/status">
-                    <span class="method get">GET</span>
-                    <span class="test-path">/api/status</span>
-                    <span class="expected-badge badge-json">JSON</span>
-                </button>
-
-                <button class="test-btn" data-method="GET" data-path="/api/info">
-                    <span class="method get">GET</span>
-                    <span class="test-path">/api/info</span>
-                    <span class="expected-badge badge-json">JSON</span>
-                </button>
-
-                <button class="test-btn" data-method="POST" data-path="/api/echo" data-body='{"message": "Hello from C++ HTTP client!", "role": "FullStack Engineer", "timestamp": 12345678}'>
-                    <span class="method post">POST</span>
-                    <span class="test-path">/api/echo</span>
-                    <span class="expected-badge badge-post">Echo Body</span>
-                </button>
-
-                <div class="control-group-title">In-Memory Resource APIs</div>
-                <button class="test-btn" data-method="GET" data-path="/api/tasks">
-                    <span class="method get">GET</span>
-                    <span class="test-path">/api/tasks</span>
-                    <span class="expected-badge badge-json">List Tasks</span>
-                </button>
-
-                <button class="test-btn" data-method="POST" data-path="/api/tasks" data-body='{"title": "Automate Docker cloud container deployment"}'>
-                    <span class="method post">POST</span>
-                    <span class="test-path">/api/tasks</span>
-                    <span class="expected-badge badge-201">201 Create</span>
-                </button>
-
-                <div class="control-group-title">Static Files &amp; Guard Rails</div>
-                <button class="test-btn" data-method="GET" data-path="/">
-                    <span class="method get">GET</span>
-                    <span class="test-path">/ (index.html)</span>
-                    <span class="expected-badge badge-200">200 OK</span>
-                </button>
-
-                <button class="test-btn" data-method="GET" data-path="/../etc/passwd">
-                    <span class="method get">GET</span>
-                    <span class="test-path">/../traversal</span>
-                    <span class="expected-badge badge-403">403 Forbidden</span>
-                </button>
-            </div>
-
-            <div class="console-box">
-                <div class="console-header">
-                    <div class="console-dots">
-                        <span class="dot-red"></span>
-                        <span class="dot-yellow"></span>
-                        <span class="dot-green"></span>
+        <!-- ======================================================== -->
+        <!-- TAB 1: TELEMETRY & METRICS DASHBOARD                     -->
+        <!-- ======================================================== -->
+        <section id="tab-telemetry" class="tab-panel active">
+            <!-- Hero Status Banner -->
+            <div class="hero-status-card">
+                <div class="hero-status-left">
+                    <div class="status-indicator-badge">
+                        <span class="green-ring"></span>
+                        <span class="status-strong">Server Core Operational</span>
                     </div>
-                    <span class="console-title" id="console-endpoint-title">Live API Response Inspector</span>
-                    <span class="console-latency" id="response-latency">Ready</span>
+                    <h1>Engineered in <span class="gradient-text">C++17</span> with Native TCP Sockets</h1>
+                    <p class="hero-desc">
+                        A low-latency, multithreaded networking core delivering sub-millisecond response times.
+                        Accepts concurrent requests without external runtimes, third-party frameworks, or garbage collection pauses.
+                    </p>
                 </div>
-                <div class="console-body" id="console-output">
-Click any endpoint button on the left to fire a live HTTP request to the C++ server.
-JSON structures, HTTP headers, and roundtrip latency will be displayed here.
+                <div class="hero-status-right">
+                    <button class="btn btn-primary" id="btn-ping-server">
+                        <span>⚡ Ping Server</span>
+                    </button>
+                    <button class="btn btn-secondary" id="btn-copy-url">
+                        <span>📋 Copy Endpoint</span>
+                    </button>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Real-time In-Memory CRUD Task Application -->
-    <section id="task-app" class="section">
-        <h2>Live In-Memory REST Application</h2>
-        <p>
-            This interactive task tracker performs real-time <code>GET</code>, <code>POST</code>, <code>PUT</code>, and <code>DELETE</code>
-            requests against <code>/api/tasks</code> on the C++ server.
-        </p>
+            <!-- Telemetry Metrics Grid -->
+            <div class="telemetry-grid">
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">Health Status</span>
+                        <span class="metric-icon">🟢</span>
+                    </div>
+                    <div class="metric-number text-success" id="metric-health">Healthy</div>
+                    <div class="metric-caption" id="metric-sub-health">C++ Core Engine Online</div>
+                </div>
 
-        <div class="task-app-card">
-            <form id="create-task-form" class="task-input-bar">
-                <input type="text" id="task-input" placeholder="Type a task name and press Enter (POST /api/tasks)..." required autocomplete="off">
-                <button type="submit" class="btn primary">Add Task (POST)</button>
-            </form>
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">Total Requests</span>
+                        <span class="metric-icon">📈</span>
+                    </div>
+                    <div class="metric-number" id="metric-requests">0</div>
+                    <div class="metric-caption">Processed through socket pool</div>
+                </div>
 
-            <div class="task-list-header">
-                <span>Stored Tasks (in C++ Server Memory)</span>
-                <button type="button" id="refresh-tasks-btn" class="btn-sm">🔄 Refresh List</button>
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">System Uptime</span>
+                        <span class="metric-icon">⏱️</span>
+                    </div>
+                    <div class="metric-number" id="metric-uptime">0s</div>
+                    <div class="metric-caption">Continuous server uptime</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-title">Active Worker Threads</span>
+                        <span class="metric-icon">🧵</span>
+                    </div>
+                    <div class="metric-number" id="metric-connections">0</div>
+                    <div class="metric-caption">Concurrent client sockets</div>
+                </div>
             </div>
 
-            <ul id="task-list" class="task-list">
-                <li class="task-empty">Loading tasks from C++ server...</li>
-            </ul>
-        </div>
-    </section>
+            <!-- Server Environment Spec Bar -->
+            <div class="spec-panel">
+                <div class="spec-item">
+                    <span class="spec-key">Architecture:</span>
+                    <span class="spec-val" id="spec-os">Loading...</span>
+                </div>
+                <div class="spec-divider"></div>
+                <div class="spec-item">
+                    <span class="spec-key">Compiler:</span>
+                    <span class="spec-val" id="spec-compiler">Loading...</span>
+                </div>
+                <div class="spec-divider"></div>
+                <div class="spec-item">
+                    <span class="spec-key">Language:</span>
+                    <span class="spec-val">ISO C++17</span>
+                </div>
+                <div class="spec-divider"></div>
+                <div class="spec-item">
+                    <span class="spec-key">Protocol:</span>
+                    <span class="spec-val">HTTP/1.1 RFC 7231</span>
+                </div>
+                <div class="spec-divider"></div>
+                <div class="spec-item">
+                    <span class="spec-key">Security Shield:</span>
+                    <span class="spec-val text-success">Active (Traversal Guard)</span>
+                </div>
+            </div>
 
-    <!-- Architecture & Features -->
-    <section id="features" class="section">
-        <h2>Core Capabilities</h2>
+            <!-- Live Server Activity Log -->
+            <div class="card-box">
+                <div class="card-box-header">
+                    <div class="header-left">
+                        <span class="box-title">Live Activity &amp; Request Log</span>
+                        <span class="box-subtitle">Real-time incoming telemetry stream</span>
+                    </div>
+                    <button class="btn btn-ghost btn-sm" id="btn-clear-logs">Clear Log</button>
+                </div>
+                <div class="log-stream" id="log-stream-box">
+                    <div class="log-entry system-msg">
+                        <span class="log-time">[System]</span>
+                        <span class="log-text">Telemetry monitor initialized. Listening for HTTP events on port 8080...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="cards">
-            <div class="card">
-                <div class="icon">⚡</div>
-                <h3>Multithreaded Engine</h3>
+        <!-- ======================================================== -->
+        <!-- TAB 2: REST API STUDIO (INTERACTIVE REQUEST BUILDER)     -->
+        <!-- ======================================================== -->
+        <section id="tab-api-studio" class="tab-panel">
+            <div class="section-intro">
+                <h2>REST API Studio &amp; Request Inspector</h2>
+                <p>Execute real-time API requests against the running C++ server. Test headers, payloads, query parameters, and inspection of raw socket responses.</p>
+            </div>
+
+            <div class="api-studio-layout">
+                <!-- Left Sidebar: Preset Catalog -->
+                <div class="api-catalog">
+                    <div class="catalog-section-title">Telemetry &amp; Diagnostics</div>
+                    <button class="preset-btn active" data-method="GET" data-path="/api/status" data-desc="Server Health &amp; Telemetry">
+                        <span class="method-tag get">GET</span>
+                        <span class="preset-name">/api/status</span>
+                    </button>
+                    <button class="preset-btn" data-method="GET" data-path="/api/info" data-desc="Server Metadata &amp; Compiler Specs">
+                        <span class="method-tag get">GET</span>
+                        <span class="preset-name">/api/info</span>
+                    </button>
+                    <button class="preset-btn" data-method="POST" data-path="/api/echo" data-body='{"message": "Hello from C++ REST Studio", "sender": "Client UI", "timestamp": 12345678}' data-desc="Echo Payload &amp; Headers Test">
+                        <span class="method-tag post">POST</span>
+                        <span class="preset-name">/api/echo</span>
+                    </button>
+
+                    <div class="catalog-section-title">In-Memory Task CRUD</div>
+                    <button class="preset-btn" data-method="GET" data-path="/api/tasks" data-desc="Retrieve all stored tasks">
+                        <span class="method-tag get">GET</span>
+                        <span class="preset-name">/api/tasks</span>
+                    </button>
+                    <button class="preset-btn" data-method="POST" data-path="/api/tasks" data-body='{"title": "Deploy C++ container to AWS ECS"}' data-desc="Create a new task">
+                        <span class="method-tag post">POST</span>
+                        <span class="preset-name">/api/tasks</span>
+                    </button>
+                    <button class="preset-btn" data-method="PUT" data-path="/api/tasks?id=1" data-desc="Toggle completion status">
+                        <span class="method-tag put">PUT</span>
+                        <span class="preset-name">/api/tasks?id=1</span>
+                    </button>
+                    <button class="preset-btn" data-method="DELETE" data-path="/api/tasks?id=1" data-desc="Delete task by identifier">
+                        <span class="method-tag delete">DEL</span>
+                        <span class="preset-name">/api/tasks?id=1</span>
+                    </button>
+
+                    <div class="catalog-section-title">Security &amp; Guards</div>
+                    <button class="preset-btn" data-method="GET" data-path="/../etc/passwd" data-desc="Test Traversal Defense (403)">
+                        <span class="method-tag get">GET</span>
+                        <span class="preset-name">/../traversal</span>
+                    </button>
+                    <button class="preset-btn" data-method="GET" data-path="/server.cpp" data-desc="Test Source Code Protection (403)">
+                        <span class="method-tag get">GET</span>
+                        <span class="preset-name">/server.cpp</span>
+                    </button>
+                </div>
+
+                <!-- Right Workbench: Request Builder & Response Inspector -->
+                <div class="api-workbench">
+                    <!-- Request Builder Bar -->
+                    <div class="request-builder-card">
+                        <div class="url-bar">
+                            <select id="req-method-select" class="method-dropdown">
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                                <option value="PUT">PUT</option>
+                                <option value="DELETE">DELETE</option>
+                                <option value="HEAD">HEAD</option>
+                                <option value="OPTIONS">OPTIONS</option>
+                            </select>
+                            <input type="text" id="req-path-input" value="/api/status" class="url-input" placeholder="/api/endpoint">
+                            <button class="btn btn-primary" id="btn-send-request">
+                                <span>Send Request</span>
+                            </button>
+                        </div>
+
+                        <!-- JSON Payload Editor (Collapsible / Dynamic) -->
+                        <div class="body-editor-container" id="body-editor-wrap">
+                            <div class="editor-header">
+                                <span>Request Body (JSON):</span>
+                                <button class="btn-text btn-sm" id="btn-format-json">Format JSON</button>
+                            </div>
+                            <textarea id="req-body-input" class="json-textarea" rows="4" placeholder='{"title": "Sample task payload"}'></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Response Inspector Terminal -->
+                    <div class="response-terminal-card">
+                        <div class="terminal-header">
+                            <div class="window-dots">
+                                <span class="dot-red"></span>
+                                <span class="dot-yellow"></span>
+                                <span class="dot-green"></span>
+                            </div>
+                            <div class="terminal-title">
+                                <span id="res-status-chip" class="status-chip chip-200">200 OK</span>
+                                <span id="res-timing-chip" class="timing-chip">0.4 ms</span>
+                            </div>
+                            <div class="terminal-actions">
+                                <button class="btn-text btn-sm" id="btn-copy-response">Copy JSON</button>
+                            </div>
+                        </div>
+
+                        <div class="terminal-headers-bar" id="terminal-headers">
+                            <div class="headers-title" id="toggle-headers-btn">
+                                <span>▼ Response Headers (HTTP/1.1)</span>
+                            </div>
+                            <div class="headers-content" id="headers-content-view">
+                                Date: --<br>
+                                Server: CppHttpServer/1.2.0<br>
+                                Content-Type: application/json; charset=utf-8<br>
+                                Access-Control-Allow-Origin: *
+                            </div>
+                        </div>
+
+                        <div class="terminal-body" id="terminal-body-view">
+{
+  "status": "ready",
+  "message": "Click 'Send Request' or select any endpoint from the left catalog."
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- TAB 3: IN-MEMORY DATABASE & CRUD APPLICATION             -->
+        <!-- ======================================================== -->
+        <section id="tab-crud" class="tab-panel">
+            <div class="section-intro">
+                <h2>Real-Time In-Memory CRUD Engine</h2>
                 <p>
-                    POSIX / C++17 detached threads handle requests concurrently with non-blocking network socket polling.
+                    All items are stored directly in the C++ server's active memory space, protected by an asynchronous <code>std::mutex</code> lock.
+                    Perform live <code>POST</code>, <code>PUT</code>, and <code>DELETE</code> operations below.
                 </p>
             </div>
 
-            <div class="card">
-                <div class="icon">🔌</div>
-                <h3>Native REST APIs</h3>
+            <div class="crud-layout">
+                <!-- Create Item Form -->
+                <div class="card-box">
+                    <form id="crud-create-form" class="crud-form">
+                        <div class="form-title">Create New Task (POST /api/tasks)</div>
+                        <div class="form-row">
+                            <input type="text" id="crud-task-input" class="form-input" placeholder="Enter task title (e.g., 'Configure NGINX reverse proxy')..." required>
+                            <button type="submit" class="btn btn-primary">
+                                <span>+ Add Task</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Task Listing Component -->
+                <div class="card-box">
+                    <div class="card-box-header">
+                        <div class="header-left">
+                            <span class="box-title">In-Memory Tasks Database</span>
+                            <span class="box-subtitle" id="task-filter-summary">Showing all stored items</span>
+                        </div>
+                        <div class="header-filters">
+                            <button class="filter-pill active" data-filter="all">All</button>
+                            <button class="filter-pill" data-filter="pending">Pending</button>
+                            <button class="filter-pill" data-filter="completed">Completed</button>
+                            <button class="btn btn-ghost btn-sm" id="btn-refresh-crud">🔄 Sync</button>
+                        </div>
+                    </div>
+
+                    <ul class="task-items-list" id="crud-task-list">
+                        <li class="task-loading">Syncing with C++ backend...</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- TAB 4: BENCHMARKS & LOAD TESTER                          -->
+        <!-- ======================================================== -->
+        <section id="tab-benchmarks" class="tab-panel">
+            <div class="section-intro">
+                <h2>Live Multithreaded Concurrency Benchmark</h2>
                 <p>
-                    Full JSON serialization for <code>/api/status</code>, <code>/api/info</code>, <code>/api/echo</code>, and CRUD <code>/api/tasks</code>.
+                    Test the raw throughput of the C++ socket pool. This runner fires parallel asynchronous HTTP requests directly from your browser to stress-test the server's thread allocation.
                 </p>
             </div>
 
-            <div class="card">
-                <div class="icon">🛡️</div>
-                <h3>Security Guard Rails</h3>
-                <p>
-                    Directory traversal shields block malicious <code>..</code> paths, hidden dotfiles, and source code downloads.
-                </p>
+            <div class="benchmark-grid">
+                <!-- Benchmark Controls Card -->
+                <div class="card-box">
+                    <div class="card-box-header">
+                        <span class="box-title">Benchmark Parameters</span>
+                    </div>
+
+                    <div class="benchmark-form">
+                        <div class="input-group">
+                            <label>Request Volume:</label>
+                            <div class="btn-group-selector" id="bench-volume-selector">
+                                <button class="select-btn active" data-volume="10">10 Req</button>
+                                <button class="select-btn" data-volume="25">25 Req</button>
+                                <button class="select-btn" data-volume="50">50 Req</button>
+                                <button class="select-btn" data-volume="100">100 Req</button>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Concurrency Workers:</label>
+                            <div class="btn-group-selector" id="bench-concurrency-selector">
+                                <button class="select-btn" data-concurrency="5">5 Workers</button>
+                                <button class="select-btn active" data-concurrency="10">10 Workers</button>
+                                <button class="select-btn" data-concurrency="20">20 Workers</button>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Target API Endpoint:</label>
+                            <select id="bench-endpoint-select" class="form-input">
+                                <option value="/api/status">GET /api/status (JSON Serializer)</option>
+                                <option value="/api/tasks">GET /api/tasks (Mutex Protected)</option>
+                                <option value="/api/info">GET /api/info (Static JSON)</option>
+                                <option value="/">GET / (Static File Streaming)</option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-primary btn-block" id="btn-run-benchmark">
+                            <span>🚀 Execute Concurrency Test</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Benchmark Results Scorecard -->
+                <div class="card-box">
+                    <div class="card-box-header">
+                        <span class="box-title">Benchmark Results Scorecard</span>
+                        <span class="box-subtitle" id="bench-status-badge">Idle</span>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="progress-track">
+                        <div class="progress-bar" id="bench-progress-bar" style="width: 0%;"></div>
+                    </div>
+
+                    <div class="stats-matrix">
+                        <div class="stat-cell">
+                            <div class="cell-label">Throughput</div>
+                            <div class="cell-value text-accent" id="bench-rps">--</div>
+                            <div class="cell-sub">Requests / Second</div>
+                        </div>
+                        <div class="stat-cell">
+                            <div class="cell-label">Avg Roundtrip</div>
+                            <div class="cell-value" id="bench-avg-lat">--</div>
+                            <div class="cell-sub">Milliseconds</div>
+                        </div>
+                        <div class="stat-cell">
+                            <div class="cell-label">Min / Max Latency</div>
+                            <div class="cell-value" id="bench-minmax-lat">--</div>
+                            <div class="cell-sub">Fastest / Slowest</div>
+                        </div>
+                        <div class="stat-cell">
+                            <div class="cell-label">Success Rate</div>
+                            <div class="cell-value text-success" id="bench-success-rate">--</div>
+                            <div class="cell-sub">HTTP 200 OK</div>
+                        </div>
+                    </div>
+
+                    <div class="bench-log" id="bench-log-view">
+Select parameters and click "Execute Concurrency Test" to stress test the server.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- TAB 5: ARCHITECTURE & SPECS                              -->
+        <!-- ======================================================== -->
+        <section id="tab-architecture" class="tab-panel">
+            <div class="section-intro">
+                <h2>Architecture &amp; Technical Specifications</h2>
+                <p>Under the hood of the custom C++ HTTP engine.</p>
             </div>
 
-            <div class="card">
-                <div class="icon">🌐</div>
-                <h3>CORS &amp; Cloud Ready</h3>
-                <p>
-                    Full cross-origin support (CORS preflight <code>OPTIONS</code>) and dynamic <code>PORT</code> environment variable binding.
-                </p>
+            <!-- Architecture Diagram Flow -->
+            <div class="architecture-diagram">
+                <div class="diagram-step">
+                    <div class="step-badge">1</div>
+                    <div class="step-title">TCP Inbound</div>
+                    <div class="step-desc">Kernel accept() binds client socket connection</div>
+                </div>
+                <div class="diagram-arrow">➔</div>
+
+                <div class="diagram-step">
+                    <div class="step-badge">2</div>
+                    <div class="step-title">Thread Pool</div>
+                    <div class="step-desc">Detached std::thread allocated per client</div>
+                </div>
+                <div class="diagram-arrow">➔</div>
+
+                <div class="diagram-step">
+                    <div class="step-badge">3</div>
+                    <div class="step-title">Route Engine</div>
+                    <div class="step-desc">URL decoding, query parsing, and traversal guard</div>
+                </div>
+                <div class="diagram-arrow">➔</div>
+
+                <div class="diagram-step">
+                    <div class="step-badge">4</div>
+                    <div class="step-title">Handler Layer</div>
+                    <div class="step-desc">REST JSON engine or binary file stream</div>
+                </div>
+                <div class="diagram-arrow">➔</div>
+
+                <div class="diagram-step">
+                    <div class="step-badge">5</div>
+                    <div class="step-title">Socket Flush</div>
+                    <div class="step-desc">Full sendAll() buffer flush with CORS headers</div>
+                </div>
             </div>
-        </div>
-    </section>
 
-    <section class="architecture">
-        <h2>System Architecture</h2>
+            <div class="spec-cards-grid">
+                <div class="card-box">
+                    <div class="box-title">RFC 7231 Compliance Matrix</div>
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Support</th>
+                                <th>Semantics</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="method-tag get">GET</span></td>
+                                <td class="text-success">Full</td>
+                                <td>Reads static assets and query REST endpoints</td>
+                            </tr>
+                            <tr>
+                                <td><span class="method-tag post">POST</span></td>
+                                <td class="text-success">Full</td>
+                                <td>Handles payloads up to 5 MB with JSON parsing</td>
+                            </tr>
+                            <tr>
+                                <td><span class="method-tag put">PUT</span></td>
+                                <td class="text-success">Full</td>
+                                <td>In-place update and toggle of in-memory resources</td>
+                            </tr>
+                            <tr>
+                                <td><span class="method-tag delete">DEL</span></td>
+                                <td class="text-success">Full</td>
+                                <td>Deletes resources identified by query parameter</td>
+                            </tr>
+                            <tr>
+                                <td><span class="method-tag options">OPT</span></td>
+                                <td class="text-success">Full</td>
+                                <td>Returns 204 No Content for CORS preflight validation</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-        <div class="flow">
-            <div class="flow-step">
-                <strong>1. Client Request</strong>
-                <span>HTTP GET/POST/PUT/DELETE</span>
+                <div class="card-box">
+                    <div class="box-title">Quick Terminal Verification (cURL)</div>
+                    <div class="curl-examples">
+                        <div class="code-block">
+                            <span class="code-comment"># 1. Fetch live telemetry status</span>
+                            <code>curl -i http://localhost:8080/api/status</code>
+                        </div>
+                        <div class="code-block">
+                            <span class="code-comment"># 2. Create a new task via REST API</span>
+                            <code>curl -X POST http://localhost:8080/api/tasks \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Automate Docker Deploy"}'</code>
+                        </div>
+                        <div class="code-block">
+                            <span class="code-comment"># 3. Test directory traversal shield</span>
+                            <code>curl -i http://localhost:8080/../etc/passwd</code>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <span class="flow-arrow">→</span>
+        </section>
 
-            <div class="flow-step">
-                <strong>2. Socket Accept</strong>
-                <span>Thread spawned in pool</span>
-            </div>
-            <span class="flow-arrow">→</span>
+    </main>
 
-            <div class="flow-step">
-                <strong>3. Route Dispatcher</strong>
-                <span>/api/* vs Static File</span>
-            </div>
-            <span class="flow-arrow">→</span>
-
-            <div class="flow-step">
-                <strong>4. API Handler</strong>
-                <span>JSON serialization &amp; mutex</span>
-            </div>
-            <span class="flow-arrow">→</span>
-
-            <div class="flow-step">
-                <strong>5. HTTP Response</strong>
-                <span>Full payload + CORS</span>
-            </div>
-        </div>
-    </section>
-</main>
-
-<footer>
-    <p>
-        <strong>C++ Multithreaded HTTP &amp; REST Server</strong> • High Performance Networking
-    </p>
-    <p>
-        Compatible with Linux, macOS &amp; Windows • Ready for Docker and Cloud Deployment
-    </p>
-</footer>
+    <!-- Global Floating Toast Notification -->
+    <div id="toast-container" class="toast-container"></div>
+</div>
 
 <script src="script.js"></script>
 </body>
