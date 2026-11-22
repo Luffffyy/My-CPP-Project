@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A lightweight, high-performance multithreaded HTTP server written in C++ from scratch.">
+    <title>C++ HTTP Server | High Performance Networking</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+</head>
+<body>
+
+<header>
+    <nav>
+        <div class="logo">
+            <span class="logo-icon">⚡</span> C++ HTTP Server
+        </div>
+
+        <div class="status-container">
+            <div class="status" id="server-status-pill" title="Click to test server connection">
+                <span class="dot"></span>
+                <span id="status-text">Server Online</span>
+            </div>
+            <div class="clock-badge">
+                🕒 <span id="server-time">--:--:--</span>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="badge">
+            🚀 High-Performance C++ Networking
+        </div>
+
+        <h1>
+            Engineered in <span>C++</span> from Scratch
+        </h1>
+
+        <p>
+            A lightweight, multithreaded HTTP/1.1 web server crafted using POSIX/Winsock TCP sockets.
+            Built with modern C++ standards, concurrency support, robust directory traversal protection, and zero external dependencies.
+        </p>
+
+        <div class="buttons">
+            <a href="#tester" class="btn primary">Try Live API Tester</a>
+            <a href="#features" class="btn secondary">View Features</a>
+            <a href="#architecture" class="btn secondary">Architecture</a>
+        </div>
+    </section>
+
+    <!-- Interactive Server API Testing Console -->
+    <section id="tester" class="section">
+        <h2>Live Server API Tester</h2>
+        <p>
+            Test real HTTP responses directly against this running C++ server instance. Click any test below to inspect headers, status codes, and server output.
+        </p>
+
+        <div class="tester-container">
+            <div class="test-controls">
+                <button class="test-btn" data-method="GET" data-path="/">
+                    <span class="method get">GET</span>
+                    <span class="test-path">/</span>
+                    <span class="expected-badge badge-200">200 OK</span>
+                </button>
+
+                <button class="test-btn" data-method="GET" data-path="/style.css">
+                    <span class="method get">GET</span>
+                    <span class="test-path">/style.css</span>
+                    <span class="expected-badge badge-200">200 OK</span>
+                </button>
+
+                <button class="test-btn" data-method="GET" data-path="/nonexistent-file.html">
+                    <span class="method get">GET</span>
+                    <span class="test-path">/missing.html</span>
+                    <span class="expected-badge badge-404">404 Not Found</span>
+                </button>
+
+                <button class="test-btn" data-method="POST" data-path="/">
+                    <span class="method post">POST</span>
+                    <span class="test-path">/</span>
+                    <span class="expected-badge badge-405">405 Not Allowed</span>
+                </button>
+
+                <button class="test-btn" data-method="GET" data-path="/../etc/passwd">
+                    <span class="method get">GET</span>
+                    <span class="test-path">/../traversal</span>
+                    <span class="expected-badge badge-403">403 Forbidden</span>
+                </button>
+            </div>
+
+            <div class="console-box">
+                <div class="console-header">
+                    <div class="console-dots">
+                        <span class="dot-red"></span>
+                        <span class="dot-yellow"></span>
+                        <span class="dot-green"></span>
+                    </div>
+                    <span class="console-title">HTTP Response Inspector</span>
+                    <span class="console-latency" id="response-latency">Ready</span>
+                </div>
+                <div class="console-body" id="console-output">
+Click any test button on the left to fire a real HTTP request to the C++ server.
+Results, response status, and headers will be rendered here.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="section">
+        <h2>Core Capabilities</h2>
+
+        <div class="cards">
+            <div class="card">
+                <div class="icon">🧵</div>
+                <h3>Multithreaded</h3>
+                <p>
+                    Handles concurrent client connections using C++ standard threads without blocking.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="icon">🌐</div>
+                <h3>HTTP/1.1 Engine</h3>
+                <p>
+                    Supports GET and HEAD methods with full RFC-compliant header generation.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="icon">🛡️</div>
+                <h3>Security Hardened</h3>
+                <p>
+                    Directory traversal protection blocks malicious <code>..</code> paths and hidden files.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="icon">📦</div>
+                <h3>Cloud & Docker Ready</h3>
+                <p>
+                    Configurable port via <code>PORT</code> environment variable or CLI flag, ready for Docker and cloud.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="architecture" class="architecture">
+        <h2>Request Lifecycle</h2>
+
+        <div class="flow">
+            <div class="flow-step">
+                <strong>1. Client Browser</strong>
+                <span>Initiates TCP Connection</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step">
+                <strong>2. TCP Socket</strong>
+                <span>accept() &amp; Thread Spawn</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step">
+                <strong>3. Parser &amp; Router</strong>
+                <span>Validate &amp; Sanitize Path</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step">
+                <strong>4. Binary File IO</strong>
+                <span>Stream file from disk</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step">
+                <strong>5. HTTP/1.1 200 OK</strong>
+                <span>Complete payload sent</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech">
+        <h2>Technologies &amp; Standards</h2>
+
+        <div class="tech-list">
+            <span>Modern C++ (C++17/C++20)</span>
+            <span>POSIX Sockets</span>
+            <span>Winsock2</span>
+            <span>Multithreading</span>
+            <span>HTTP/1.1 Protocol</span>
+            <span>Docker</span>
+            <span>HTML5 &amp; CSS3</span>
+            <span>Vanilla JavaScript</span>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>
+        <strong>C++ HTTP Server</strong> • Production-Ready Educational Project
+    </p>
+    <p>
+        Built with clean modern C++ architecture • Compatible with Linux, macOS &amp; Windows
+    </p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
