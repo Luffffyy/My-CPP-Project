@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A lightweight, high-performance multithreaded HTTP server written in C++ from scratch.">
-    <title>C++ HTTP Server | High Performance Networking</title>
+    <meta name="description" content="A multithreaded HTTP & REST API server written in C++ from scratch.">
+    <title>C++ HTTP & REST API Server | High Performance Engine</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
 </head>
@@ -13,16 +13,20 @@
 <header>
     <nav>
         <div class="logo">
-            <span class="logo-icon">⚡</span> C++ HTTP Server
+            <span class="logo-icon">⚡</span> C++ HTTP &amp; REST Server
+        </div>
+
+        <div class="nav-links">
+            <a href="#dashboard">Live Metrics</a>
+            <a href="#api-explorer">REST APIs</a>
+            <a href="#task-app">CRUD App</a>
+            <a href="#features">Features</a>
         </div>
 
         <div class="status-container">
-            <div class="status" id="server-status-pill" title="Click to test server connection">
+            <div class="status" id="server-status-pill" title="Click to ping server">
                 <span class="dot"></span>
                 <span id="status-text">Server Online</span>
-            </div>
-            <div class="clock-badge">
-                🕒 <span id="server-time">--:--:--</span>
             </div>
         </div>
     </nav>
@@ -31,56 +35,105 @@
 <main>
     <section class="hero">
         <div class="badge">
-            🚀 High-Performance C++ Networking
+            🚀 High-Performance C++17 Networking Engine
         </div>
 
         <h1>
-            Engineered in <span>C++</span> from Scratch
+            Multithreaded <span>HTTP &amp; REST API</span> Server
         </h1>
 
         <p>
-            A lightweight, multithreaded HTTP/1.1 web server crafted using POSIX/Winsock TCP sockets.
-            Built with modern C++ standards, concurrency support, robust directory traversal protection, and zero external dependencies.
+            Engineered from the ground up in standard C++ using native TCP sockets.
+            Features concurrent worker threads, full RESTful JSON APIs, in-memory CRUD data store,
+            directory traversal security, and cloud-ready containerization.
         </p>
 
         <div class="buttons">
-            <a href="#tester" class="btn primary">Try Live API Tester</a>
-            <a href="#features" class="btn secondary">View Features</a>
-            <a href="#architecture" class="btn secondary">Architecture</a>
+            <a href="#dashboard" class="btn primary">View Live Metrics</a>
+            <a href="#api-explorer" class="btn secondary">Explore REST APIs</a>
+            <a href="#task-app" class="btn secondary">Test CRUD App</a>
         </div>
     </section>
 
-    <!-- Interactive Server API Testing Console -->
-    <section id="tester" class="section">
-        <h2>Live Server API Tester</h2>
+    <!-- Real-Time Metrics Dashboard -->
+    <section id="dashboard" class="section">
+        <h2>Live Server Telemetry</h2>
+        <p>Real-time telemetry reported directly by the C++ backend via <code>/api/status</code>.</p>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Server Status</div>
+                <div class="metric-value status-good" id="metric-health">Healthy</div>
+                <div class="metric-sub" id="metric-version">v1.2.0 • C++17</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Server Uptime</div>
+                <div class="metric-value" id="metric-uptime">0s</div>
+                <div class="metric-sub">Live Process Time</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Requests Served</div>
+                <div class="metric-value" id="metric-requests">0</div>
+                <div class="metric-sub">Lifetime HTTP requests</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Active Connections</div>
+                <div class="metric-value" id="metric-connections">0</div>
+                <div class="metric-sub">Concurrent client threads</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive REST API Explorer -->
+    <section id="api-explorer" class="section">
+        <h2>Interactive REST API Explorer</h2>
         <p>
-            Test real HTTP responses directly against this running C++ server instance. Click any test below to inspect headers, status codes, and server output.
+            Test real HTTP methods (GET, POST, PUT, DELETE) against the C++ backend.
+            Click any endpoint below to inspect real-time JSON payloads, headers, and roundtrip latency.
         </p>
 
         <div class="tester-container">
             <div class="test-controls">
+                <div class="control-group-title">Telemetry &amp; Diagnostics</div>
+                <button class="test-btn" data-method="GET" data-path="/api/status">
+                    <span class="method get">GET</span>
+                    <span class="test-path">/api/status</span>
+                    <span class="expected-badge badge-json">JSON</span>
+                </button>
+
+                <button class="test-btn" data-method="GET" data-path="/api/info">
+                    <span class="method get">GET</span>
+                    <span class="test-path">/api/info</span>
+                    <span class="expected-badge badge-json">JSON</span>
+                </button>
+
+                <button class="test-btn" data-method="POST" data-path="/api/echo" data-body='{"message": "Hello from C++ HTTP client!", "role": "FullStack Engineer", "timestamp": 12345678}'>
+                    <span class="method post">POST</span>
+                    <span class="test-path">/api/echo</span>
+                    <span class="expected-badge badge-post">Echo Body</span>
+                </button>
+
+                <div class="control-group-title">In-Memory Resource APIs</div>
+                <button class="test-btn" data-method="GET" data-path="/api/tasks">
+                    <span class="method get">GET</span>
+                    <span class="test-path">/api/tasks</span>
+                    <span class="expected-badge badge-json">List Tasks</span>
+                </button>
+
+                <button class="test-btn" data-method="POST" data-path="/api/tasks" data-body='{"title": "Automate Docker cloud container deployment"}'>
+                    <span class="method post">POST</span>
+                    <span class="test-path">/api/tasks</span>
+                    <span class="expected-badge badge-201">201 Create</span>
+                </button>
+
+                <div class="control-group-title">Static Files &amp; Guard Rails</div>
                 <button class="test-btn" data-method="GET" data-path="/">
                     <span class="method get">GET</span>
-                    <span class="test-path">/</span>
+                    <span class="test-path">/ (index.html)</span>
                     <span class="expected-badge badge-200">200 OK</span>
-                </button>
-
-                <button class="test-btn" data-method="GET" data-path="/style.css">
-                    <span class="method get">GET</span>
-                    <span class="test-path">/style.css</span>
-                    <span class="expected-badge badge-200">200 OK</span>
-                </button>
-
-                <button class="test-btn" data-method="GET" data-path="/nonexistent-file.html">
-                    <span class="method get">GET</span>
-                    <span class="test-path">/missing.html</span>
-                    <span class="expected-badge badge-404">404 Not Found</span>
-                </button>
-
-                <button class="test-btn" data-method="POST" data-path="/">
-                    <span class="method post">POST</span>
-                    <span class="test-path">/</span>
-                    <span class="expected-badge badge-405">405 Not Allowed</span>
                 </button>
 
                 <button class="test-btn" data-method="GET" data-path="/../etc/passwd">
@@ -97,112 +150,123 @@
                         <span class="dot-yellow"></span>
                         <span class="dot-green"></span>
                     </div>
-                    <span class="console-title">HTTP Response Inspector</span>
+                    <span class="console-title" id="console-endpoint-title">Live API Response Inspector</span>
                     <span class="console-latency" id="response-latency">Ready</span>
                 </div>
                 <div class="console-body" id="console-output">
-Click any test button on the left to fire a real HTTP request to the C++ server.
-Results, response status, and headers will be rendered here.
+Click any endpoint button on the left to fire a live HTTP request to the C++ server.
+JSON structures, HTTP headers, and roundtrip latency will be displayed here.
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Real-time In-Memory CRUD Task Application -->
+    <section id="task-app" class="section">
+        <h2>Live In-Memory REST Application</h2>
+        <p>
+            This interactive task tracker performs real-time <code>GET</code>, <code>POST</code>, <code>PUT</code>, and <code>DELETE</code>
+            requests against <code>/api/tasks</code> on the C++ server.
+        </p>
+
+        <div class="task-app-card">
+            <form id="create-task-form" class="task-input-bar">
+                <input type="text" id="task-input" placeholder="Type a task name and press Enter (POST /api/tasks)..." required autocomplete="off">
+                <button type="submit" class="btn primary">Add Task (POST)</button>
+            </form>
+
+            <div class="task-list-header">
+                <span>Stored Tasks (in C++ Server Memory)</span>
+                <button type="button" id="refresh-tasks-btn" class="btn-sm">🔄 Refresh List</button>
+            </div>
+
+            <ul id="task-list" class="task-list">
+                <li class="task-empty">Loading tasks from C++ server...</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Architecture & Features -->
     <section id="features" class="section">
         <h2>Core Capabilities</h2>
 
         <div class="cards">
             <div class="card">
-                <div class="icon">🧵</div>
-                <h3>Multithreaded</h3>
+                <div class="icon">⚡</div>
+                <h3>Multithreaded Engine</h3>
                 <p>
-                    Handles concurrent client connections using C++ standard threads without blocking.
+                    POSIX / C++17 detached threads handle requests concurrently with non-blocking network socket polling.
                 </p>
             </div>
 
             <div class="card">
-                <div class="icon">🌐</div>
-                <h3>HTTP/1.1 Engine</h3>
+                <div class="icon">🔌</div>
+                <h3>Native REST APIs</h3>
                 <p>
-                    Supports GET and HEAD methods with full RFC-compliant header generation.
+                    Full JSON serialization for <code>/api/status</code>, <code>/api/info</code>, <code>/api/echo</code>, and CRUD <code>/api/tasks</code>.
                 </p>
             </div>
 
             <div class="card">
                 <div class="icon">🛡️</div>
-                <h3>Security Hardened</h3>
+                <h3>Security Guard Rails</h3>
                 <p>
-                    Directory traversal protection blocks malicious <code>..</code> paths and hidden files.
+                    Directory traversal shields block malicious <code>..</code> paths, hidden dotfiles, and source code downloads.
                 </p>
             </div>
 
             <div class="card">
-                <div class="icon">📦</div>
-                <h3>Cloud & Docker Ready</h3>
+                <div class="icon">🌐</div>
+                <h3>CORS &amp; Cloud Ready</h3>
                 <p>
-                    Configurable port via <code>PORT</code> environment variable or CLI flag, ready for Docker and cloud.
+                    Full cross-origin support (CORS preflight <code>OPTIONS</code>) and dynamic <code>PORT</code> environment variable binding.
                 </p>
             </div>
         </div>
     </section>
 
-    <section id="architecture" class="architecture">
-        <h2>Request Lifecycle</h2>
+    <section class="architecture">
+        <h2>System Architecture</h2>
 
         <div class="flow">
             <div class="flow-step">
-                <strong>1. Client Browser</strong>
-                <span>Initiates TCP Connection</span>
+                <strong>1. Client Request</strong>
+                <span>HTTP GET/POST/PUT/DELETE</span>
             </div>
             <span class="flow-arrow">→</span>
 
             <div class="flow-step">
-                <strong>2. TCP Socket</strong>
-                <span>accept() &amp; Thread Spawn</span>
+                <strong>2. Socket Accept</strong>
+                <span>Thread spawned in pool</span>
             </div>
             <span class="flow-arrow">→</span>
 
             <div class="flow-step">
-                <strong>3. Parser &amp; Router</strong>
-                <span>Validate &amp; Sanitize Path</span>
+                <strong>3. Route Dispatcher</strong>
+                <span>/api/* vs Static File</span>
             </div>
             <span class="flow-arrow">→</span>
 
             <div class="flow-step">
-                <strong>4. Binary File IO</strong>
-                <span>Stream file from disk</span>
+                <strong>4. API Handler</strong>
+                <span>JSON serialization &amp; mutex</span>
             </div>
             <span class="flow-arrow">→</span>
 
             <div class="flow-step">
-                <strong>5. HTTP/1.1 200 OK</strong>
-                <span>Complete payload sent</span>
+                <strong>5. HTTP Response</strong>
+                <span>Full payload + CORS</span>
             </div>
-        </div>
-    </section>
-
-    <section class="tech">
-        <h2>Technologies &amp; Standards</h2>
-
-        <div class="tech-list">
-            <span>Modern C++ (C++17/C++20)</span>
-            <span>POSIX Sockets</span>
-            <span>Winsock2</span>
-            <span>Multithreading</span>
-            <span>HTTP/1.1 Protocol</span>
-            <span>Docker</span>
-            <span>HTML5 &amp; CSS3</span>
-            <span>Vanilla JavaScript</span>
         </div>
     </section>
 </main>
 
 <footer>
     <p>
-        <strong>C++ HTTP Server</strong> • Production-Ready Educational Project
+        <strong>C++ Multithreaded HTTP &amp; REST Server</strong> • High Performance Networking
     </p>
     <p>
-        Built with clean modern C++ architecture • Compatible with Linux, macOS &amp; Windows
+        Compatible with Linux, macOS &amp; Windows • Ready for Docker and Cloud Deployment
     </p>
 </footer>
 

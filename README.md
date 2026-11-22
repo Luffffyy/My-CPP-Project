@@ -1,6 +1,6 @@
-# C++ Multithreaded HTTP Server 🚀
+# C++ Multithreaded HTTP & REST API Server 🚀
 
-A high-performance, multithreaded HTTP/1.1 web server written from scratch in **modern C++** using POSIX and Winsock TCP socket programming. It supports concurrent connections, static asset serving, directory traversal security, and zero external runtime dependencies.
+A high-performance, multithreaded HTTP/1.1 and REST API web server written from scratch in **modern C++** using standard POSIX and Winsock TCP socket programming. It supports full RESTful CRUD operations, dynamic JSON generation, live telemetry metrics, concurrent request pooling, directory traversal security, and zero external runtime dependencies.
 
 ![C++](https://img.shields.io/badge/Language-C%2B%2B17%20%2F%20C%2B%2B20-blue.svg)
 ![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey.svg)
@@ -11,17 +11,25 @@ A high-performance, multithreaded HTTP/1.1 web server written from scratch in **
 
 ## ✨ Features
 
-* **Multithreaded Architecture**: Dispatches incoming client connections into dedicated detached threads (`std::thread`), handling concurrent web browser requests without blocking.
-* **HTTP/1.1 Protocol**: Supports both `GET` and `HEAD` methods with standard RFC-compliant headers (`Date`, `Server`, `Content-Length`, `Content-Type`, `Connection: close`).
-* **Rich MIME Support**: Automatically identifies and serves `.html`, `.css`, `.js`, `.json`, `.png`, `.jpg`, `.svg`, `.ico`, `.webp`, `.pdf`, `.wasm`, `.woff2`, and more.
-* **Security Hardening**:
-  * Blocks directory traversal attacks (`..`, encoded variants, backslashes).
-  * Prevents serving hidden files (`.*`) and internal source files (`server.cpp`, `Makefile`, etc.).
-  * Ignores `SIGPIPE` on POSIX systems to prevent server crash when clients abort connections mid-stream.
+* **Multithreaded Socket Engine**: Dispatches incoming client TCP sockets to detached threads (`std::thread`), handling concurrent connections and requests without blocking.
+* **Full RESTful API Engine**:
+  * `GET /api/status`: Real-time server telemetry, uptime, lifetime requests served, and active connections.
+  * `GET /api/info`: Server metadata, compiler, platform, and enabled features.
+  * `POST /api/echo`: Echoes back payload body, headers, client IP, and query parameters.
+  * `GET /api/tasks`: Retrieves in-memory task lists.
+  * `POST /api/tasks`: Creates a new task with JSON payload (`201 Created`).
+  * `PUT /api/tasks?id=X`: Toggles completion status of a task.
+  * `DELETE /api/tasks?id=X`: Deletes a task by ID.
+* **Interactive Frontend & CRUD App**: Built-in dashboard with real-time telemetry metrics polling, interactive API request console, and live Task Manager CRUD application.
+* **CORS Preflight Support**: Full support for cross-origin requests (`OPTIONS` preflight, `Access-Control-Allow-Origin: *`).
+* **Static File Serving**: Serves `.html`, `.css`, `.js`, `.json`, `.png`, `.jpg`, `.svg`, `.ico`, `.webp`, `.pdf`, `.wasm`, `.woff2` with accurate MIME types.
+* **Security Hardened**:
+  * Traversal protection against `..`, encoded variants, and backslashes.
+  * Shielding against reading hidden files (`.*`) and project internals (`server.cpp`, `Makefile`, etc.).
+  * Ignores `SIGPIPE` on POSIX systems to protect against client disconnection aborts.
   * Graceful shutdown on `SIGINT` (Ctrl+C) and `SIGTERM`.
-* **Configurable Port**: Adapts port dynamically via `PORT` environment variable or command-line arguments (e.g. `./server 3000`), making it 100% cloud & Docker ready.
-* **Zero External Dependencies**: Standard C++ standard library and system socket APIs only.
-* **Interactive Web Console**: Comes with a built-in live API tester to inspect HTTP status codes and responses in real-time.
+* **Dynamic Cloud Configuration**: Automatically reads `PORT` environment variable or command-line arguments (e.g. `./server 3000`).
+* **Zero External Dependencies**: Standard C++ Standard Library and system sockets only.
 
 ---
 
@@ -29,16 +37,16 @@ A high-performance, multithreaded HTTP/1.1 web server written from scratch in **
 
 ```text
 C++_HTTP_SERVER/
-├── server.cpp          # Main multithreaded C++ HTTP server
-├── index.html          # Interactive frontend showcase & API testbench
-├── style.css           # Modern dark-mode stylesheet
-├── script.js           # Client-side JavaScript & API tester
-├── Makefile            # Standard build automation
-├── CMakeLists.txt      # Cross-platform CMake configuration
+├── server.cpp          # Multithreaded HTTP server & REST API engine
+├── index.html          # Interactive frontend, telemetry dashboard & CRUD UI
+├── style.css           # Modern dark-mode styling
+├── script.js           # Client-side telemetry poller & API consumer
+├── Makefile            # Build automation
+├── CMakeLists.txt      # Cross-platform CMake build configuration
 ├── Dockerfile          # Multi-stage production container build
 ├── docker-compose.yml  # Docker Compose service definition
 ├── .gitignore          # Git ignore rules
-└── README.md           # Documentation
+└── README.md           # Documentation & API reference
 ```
 
 ---
@@ -85,21 +93,66 @@ cmake --build .
 
 ---
 
+## 📡 REST API Reference
+
+All API responses are formatted in RFC-compliant JSON with CORS enabled:
+
+### 1. Server Telemetry & Status
+* **Endpoint**: `GET /api/status`
+* **Response**: `200 OK`
+```json
+{
+  "status": "healthy",
+  "server": "C++ Multithreaded HTTP Server",
+  "version": "1.2.0",
+  "timestamp": "2026-11-22T14:35:00Z",
+  "uptime": "15m 32s",
+  "uptime_seconds": 932,
+  "total_requests_served": 142,
+  "active_connections": 1,
+  "client_ip": "127.0.0.1"
+}
+```
+
+### 2. Server Metadata
+* **Endpoint**: `GET /api/info`
+* **Response**: `200 OK`
+```json
+{
+  "server_name": "CppHttpServer",
+  "version": "1.2.0",
+  "platform": "macOS",
+  "compiler": "Clang 16.0.0",
+  "supported_methods": ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"]
+}
+```
+
+### 3. Request Echo
+* **Endpoint**: `POST /api/echo`
+* **Request Body**: `{"message": "Hello C++!"}`
+* **Response**: `200 OK` (Echoes headers, client IP, method, and payload)
+
+### 4. In-Memory Task CRUD
+* **List Tasks**: `GET /api/tasks` $\rightarrow$ `200 OK`
+* **Create Task**: `POST /api/tasks` with JSON `{"title": "Deploy on Kubernetes"}` $\rightarrow$ `201 Created`
+* **Toggle Task**: `PUT /api/tasks?id=1` $\rightarrow$ `200 OK`
+* **Delete Task**: `DELETE /api/tasks?id=1` $\rightarrow$ `200 OK`
+
+---
+
 ## 🐳 Docker Deployment
 
 The project includes an optimized multi-stage `Dockerfile` and `docker-compose.yml`.
 
 ### Using Docker Compose:
-
 ```bash
 docker compose up --build -d
 ```
 
 ### Using Plain Docker:
-
 ```bash
 docker build -t cpp-http-server .
-docker run -p 8080:8080 cpp-http-server
+docker run -d -p 8080:8080 cpp-http-server
 ```
 
 Open `http://localhost:8080` in your web browser.
@@ -113,7 +166,7 @@ Because the server automatically reads the `PORT` environment variable (`getenv(
 1. **Docker-based Cloud (Render, Fly.io, Railway, DigitalOcean App Platform)**:
    - Connect your GitHub repository.
    - Select Docker environment.
-   - The platform will build using `Dockerfile` and supply its own `PORT` environment variable automatically.
+   - The platform builds the `Dockerfile` and binds the container to its dynamic cloud port automatically.
 
 2. **Linux VPS (Ubuntu / Debian / AlmaLinux)**:
    ```bash
@@ -122,34 +175,6 @@ Because the server automatically reads the `PORT` environment variable (`getenv(
    make
    sudo PORT=80 ./server
    ```
-   Or create a `systemd` service:
-   ```ini
-   [Unit]
-   Description=C++ HTTP Server
-   After=network.target
-
-   [Service]
-   Type=simple
-   User=www-data
-   WorkingDirectory=/var/www/cpp-server
-   ExecStart=/var/www/cpp-server/server 8080
-   Restart=always
-
-   [Install]
-   WantedBy=multi-user.target
-   ```
-
----
-
-## 📡 HTTP Endpoints & Responses
-
-| Status Code | Description | Tested Case |
-| ----------- | ----------- | ----------- |
-| `200 OK` | Successfully found and served file | `GET /` or `GET /style.css` |
-| `400 Bad Request` | Request line is missing or malformed | Malformed HTTP request string |
-| `403 Forbidden` | Access to forbidden file or directory traversal | `GET /../secret` or `GET /server.cpp` |
-| `404 Not Found` | Requested resource does not exist | `GET /nonexistent.html` |
-| `405 Method Not Allowed` | Method is not `GET` or `HEAD` | `POST /` or `PUT /` |
 
 ---
 
@@ -157,19 +182,12 @@ Because the server automatically reads the `PORT` environment variable (`getenv(
 
 To push this project to your GitHub account:
 
-1. **Initialize Git repository**:
-   ```bash
-   git init
-   git add .
-   git commit -m "feat: multithreaded C++ HTTP server with interactive frontend and Docker support"
-   ```
-
-2. **Link to your GitHub repository and push**:
-   ```bash
-   git branch -M main
-   git remote add origin https://github.com/<YOUR-USERNAME>/<YOUR-REPO-NAME>.git
-   git push -u origin main
-   ```
+```bash
+git add .
+git commit -m "feat: complete REST API engine with CRUD endpoints, telemetry and live dashboard"
+git remote add origin https://github.com/<YOUR-USERNAME>/<YOUR-REPO-NAME>.git
+git push -u origin main
+```
 
 ---
 
